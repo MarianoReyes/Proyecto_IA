@@ -2,8 +2,9 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 # Cargar el dataset
-data = pd.read_csv("creditcard.csv")
+data = pd.read_csv("https://media.githubusercontent.com/media/MarianoReyes/Proyecto_IA/main/creditcard.csv")
 
+print(data.columns)
 data.Class.value_counts()
 
 print('No Frauds', round(data['Class'].value_counts()
