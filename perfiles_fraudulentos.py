@@ -47,13 +47,20 @@ fraudulent_profile = suspicious_instances.drop(['cluster'], axis=1)
 fraudulent_profile.to_csv('perfiles_fraudulentos.csv', index=False)
 
 # Graficar los clusters
-plt.figure(figsize=(8, 6))
-for cluster in range(num_clusters):
-    cluster_data = df[df['cluster'] == cluster]
-    plt.scatter(cluster_data['distance_from_home'], cluster_data['distance_from_last_transaction'],
-                label=f'Cluster {cluster}')
-plt.xlabel('Distancia desde el hogar')
-plt.ylabel('Distancia desde la última transacción')
-plt.title('Clusters')
-plt.legend()
-plt.show()
+plt.figure(figsize=(16, 16))
+variables = ['distance_from_home', 'distance_from_last_transaction',
+             'ratio_to_median_purchase_price', 'repeat_retailer',
+             'used_chip', 'used_pin_number', 'online_order']
+
+for i in range(len(variables)):
+    for j in range(i + 1, len(variables)):
+        plt.figure(figsize=(8, 6))
+        for cluster in range(num_clusters):
+            cluster_data = df[df['cluster'] == cluster]
+            plt.scatter(
+                cluster_data[variables[i]], cluster_data[variables[j]], label=f'Cluster {cluster}')
+        plt.xlabel(variables[i])
+        plt.ylabel(variables[j])
+        plt.title(f'Clusters ({variables[i]} vs {variables[j]})')
+        plt.legend()
+        plt.show()
